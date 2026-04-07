@@ -1,0 +1,30 @@
+{
+  "name": "solana-sniper-bot",
+  "version": "1.0.0",
+  "description": "Solana memecoin sniper bot for Pump.fun and Raydium",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "watch": "ts-node-dev --respawn --transpile-only src/index.ts"
+  },
+  "dependencies": {
+    "@solana/spl-token": "^0.3.11",
+    "@solana/web3.js": "^1.95.3",
+    "@project-serum/anchor": "^0.26.0",
+    "axios": "^1.7.7",
+    "bs58": "^5.0.0",
+    "chalk": "^4.1.2",
+    "dotenv": "^16.4.5",
+    "node-fetch": "^2.7.0"
+  },
+  "devDependencies": {
+    "@types/bs58": "^4.0.4",
+    "@types/node": "^20.0.0",
+    "@types/node-fetch": "^2.6.11",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.4.5"
+  }
+}

@@ -15,11 +15,23 @@ export const CONFIG = {
 
   // Trading
   buyAmountSol: parseFloat(process.env.BUY_AMOUNT_SOL ?? '0.05'),
-  takeProfitMultiplier: parseFloat(process.env.TAKE_PROFIT_MULTIPLIER ?? '3'),
-  stopLossPercent: parseFloat(process.env.STOP_LOSS_PERCENT ?? '0.5'),
   maxSlippage: parseFloat(process.env.MAX_SLIPPAGE ?? '0.3'),
   strategy: (process.env.STRATEGY ?? 'both') as 'pumpfun' | 'raydium' | 'both',
   maxOpenPositions: parseInt(process.env.MAX_OPEN_POSITIONS ?? '3'),
+
+  // Sell strategie (partial sells + trailing stop)
+  // Fase 1: verkoop PARTIAL_SELL_1_PERCENT% van je tokens bij 2x → inleg terug + winst
+  // Fase 2: verkoop PARTIAL_SELL_2_PERCENT% bij 5x → grote winst
+  // Rest: trailing stop van TRAILING_STOP_PERCENT% onder ATH
+  partialSell1Multiplier: parseFloat(process.env.PARTIAL_SELL_1_MULTIPLIER ?? '2'),   // 2x
+  partialSell1Percent: parseFloat(process.env.PARTIAL_SELL_1_PERCENT ?? '0.50'),      // 50% van tokens
+  partialSell2Multiplier: parseFloat(process.env.PARTIAL_SELL_2_MULTIPLIER ?? '5'),   // 5x
+  partialSell2Percent: parseFloat(process.env.PARTIAL_SELL_2_PERCENT ?? '0.30'),      // 30% van tokens
+  // Resterende 20% loopt door met trailing stop (kan 10x, 50x, 100x worden)
+  trailingStopPercent: parseFloat(process.env.TRAILING_STOP_PERCENT ?? '0.20'),       // -20% van peak
+
+  // Rug pull bescherming
+  stopLossPercent: parseFloat(process.env.STOP_LOSS_PERCENT ?? '0.05'), // hard stop: -5%
 
   // Filters
   minLiquiditySol: parseFloat(process.env.MIN_LIQUIDITY_SOL ?? '10'),

@@ -40,11 +40,13 @@ export async function sellOnPumpfun(
   bondingCurve: PublicKey,
   associatedBondingCurve: PublicKey,
   reason: SellReason,
+  // Optioneel: verkoop slechts een deel van de tokens (voor partial sells)
+  tokensToSell?: number,
 ): Promise<SellResult> {
   const mint = new PublicKey(position.mint);
 
   try {
-    const tokenAmountRaw = Math.floor(position.tokenAmount);
+    const tokenAmountRaw = Math.floor(tokensToSell ?? position.remainingTokens);
     const minSolOutput = await estimateSolOutput(bondingCurve, tokenAmountRaw);
     const minSolWithSlippage = Math.floor(minSolOutput * (1 - CONFIG.maxSlippage));
 

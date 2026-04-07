@@ -114,7 +114,7 @@ export async function buyOnPumpfun(
       commitment: 'confirmed',
     });
 
-    const pricePerToken = CONFIG.buyAmountSol / estimatedTokens;
+    const pricePerToken = (CONFIG.buyAmountSol * 1e9) / estimatedTokens; // in lamports per token
 
     addPosition({
       mint: mint.toBase58(),
@@ -123,8 +123,12 @@ export async function buyOnPumpfun(
       buyPrice: pricePerToken,
       buySolAmount: CONFIG.buyAmountSol,
       tokenAmount: estimatedTokens,
-      takeProfitPrice: pricePerToken * CONFIG.takeProfitMultiplier,
-      stopLossPrice: pricePerToken * (1 - CONFIG.stopLossPercent),
+      remainingTokens: estimatedTokens,
+      peakPrice: pricePerToken,
+      takeProfitPrice: pricePerToken * CONFIG.partialSell1Multiplier,
+      stopLossPrice: pricePerToken * (1 - CONFIG.stopLossPercent),     // hard -5% stop
+      trailingStopPrice: pricePerToken * (1 - CONFIG.trailingStopPercent),
+      phase: 0,
       openedAt: Date.now(),
       txBuy: sig,
     });
